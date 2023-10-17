@@ -20,9 +20,7 @@ class ToDoController extends Controller
 
         $user = Auth::user();
 
-        $allTodos = ToDo::with('user')->where('title', 'like', '%todo%')->whereHas('user', function ($q) {
-            $q->where('email', 'like', 'mwege%');
-        })->paginate(5);
+        $allTodos = ToDo::with('user')->paginate(5);
 
         //$todos = $user->todos()->paginate(5);
 
@@ -59,6 +57,25 @@ class ToDoController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, ToDo $toDo)
+    {
+        $request->validate([
+            'title' => ['required', 'string', 'max:150'],
+            'description' => []
+        ]);
+
+        $toDo->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect(route('todo.index'));
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(ToDo $toDo)
@@ -71,22 +88,17 @@ class ToDoController extends Controller
      */
     public function edit(ToDo $toDo)
     {
-        //
+        return view('todo.edit', ['todo' => $toDo]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ToDo $toDo)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(ToDo $toDo)
     {
-        //
+        $toDo->delete();
+        return redirect()->back();
+
     }
 }

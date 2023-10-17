@@ -28,14 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('todo')->group(function(){
-       Route::get('/', [ToDoController::class, 'index'])->name('todo.index');
-       Route::get('/create', [ToDoController::class, 'create'])->name('todo.create');
-       Route::post('/store', [ToDoController::class, 'store'])->name('todo.store');
+    Route::prefix('todo')->group(function () {
+        Route::get('/', [ToDoController::class, 'index'])->name('todo.index');
+        Route::get('/create', [ToDoController::class, 'create'])->name('todo.create');
+        Route::post('/store', [ToDoController::class, 'store'])->name('todo.store');
+        Route::get('/{toDo}/edit', [ToDoController::class, 'edit'])->name('todo.edit');
+        Route::patch('/{toDo}/edit', [ToDoController::class, 'update'])->name('todo.update');
+        Route::delete('/{toDo}', [ToDoController::class, 'destroy'])->name('todo.delete');
     });
 
     // Implizite Erstellung von CRUD Routes im Controller
     // Route::resource('todo-test', ToDoController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
