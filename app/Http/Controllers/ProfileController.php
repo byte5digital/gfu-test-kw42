@@ -21,6 +21,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function createWebToken(Request $request): RedirectResponse
+    {
+        Auth::user()->createToken('test-token');
+        return redirect()->back();
+    }
+
     /**
      * Update the user's profile information.
      */
