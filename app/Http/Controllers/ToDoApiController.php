@@ -17,6 +17,11 @@ class ToDoApiController extends Controller
         return ToDoResource::collection($allTodos);
     }
 
+    public function getToDoById(Request $request, ToDo $toDo): ToDoResource
+    {
+        return new ToDoResource($toDo);
+    }
+
     public function createTodo(Request $request): JsonResponse|ToDoResource
     {
         $validation = Validator::make($request->all(), [
