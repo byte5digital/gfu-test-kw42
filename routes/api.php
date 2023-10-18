@@ -23,5 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('todo')->group(function () {
         Route::get('/', [ToDoApiController::class, 'getAllToDos'])->name('api.todo.index');
+        Route::post('/create', [ToDoApiController::class, 'createTodo'])->name('api.todo.store');
+        Route::delete('/{toDo}', [ToDoApiController::class, 'deleteTodo'])->name('api.todo.delete');
+        Route::patch('/{toDo}', [ToDoApiController::class, 'updateTodo'])->name('api.todo.patch');
+
     });
 });
