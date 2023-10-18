@@ -40,7 +40,7 @@ class ToDoApiController extends Controller
     public function deleteTodo(Request $request, ToDo $toDo): JsonResponse
     {
         $toDo->delete();
-        return new JsonResponse(status: 201);
+        return new JsonResponse(status: 204);
     }
 
     public function updateTodo(Request $request, ToDo $toDo): JsonResponse|ToDoResource
