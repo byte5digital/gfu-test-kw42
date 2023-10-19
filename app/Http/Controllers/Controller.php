@@ -20,6 +20,11 @@ class Controller extends BaseController
         return view('welcome');
     }
 
+    public function showApiList(Request $request)
+    {
+        return view('api.list');
+    }
+
     public function showDashboardWithToken(Request $request)
     {
         $validToken = Auth::user()->createToken('test-token');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ToDoController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/create-token', [ProfileController::class, 'createWebToken'])->name('token.create');
-
+    Route::get('/api-list', [Controller::class, 'showApiList'])->name('api.list');
     Route::prefix('todo')->group(function () {
         Route::get('/', [ToDoController::class, 'index'])->name('todo.index');
         Route::get('/create', [ToDoController::class, 'create'])->name('todo.create');
