@@ -30,6 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{toDo}', [ToDoApiController::class, 'updateTodo'])->name('api.todo.patch');
     });
 
+    Route::prefix('employee')->middleware('employee')->group(function () {
+        Route::get('/', [\App\Http\Controllers\EmployeeDataController::class, 'index'])->name('api.employee.index');
+    });
+
     Route::prefix('team-member')->group(function () {
         Route::post('/', [TeamMemberController::class, 'store'])->name('api.team-member.store');
     });

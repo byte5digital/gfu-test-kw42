@@ -12,6 +12,8 @@ class EmployeeData extends Data
 
 
     public function __construct(
+        public int     $id,
+        public string  $type,
         public string  $name,
         public string  $mail,
         public ?string $position
@@ -22,9 +24,9 @@ class EmployeeData extends Data
     public static function fromModel(User|TeamMember|LegacyTeamMember $user): self
     {
         return match (get_class($user)) {
-            User::class => new EmployeeData($user->name, $user->email, 'nicht verfügbar'),
-            TeamMember::class => new EmployeeData($user->name, $user->email, $user->position),
-            LegacyTeamMember::class => new EmployeeData($user->Vorname . ' ' . $user->Nachname, $user->{'E-Mail'}, 'nicht verfügbar'),
+            User::class => new EmployeeData($user->id, get_class($user), $user->name, $user->email, 'nicht verfügbar'),
+            TeamMember::class => new EmployeeData($user->id, get_class($user), $user->name, $user->email, $user->position),
+            LegacyTeamMember::class => new EmployeeData($user->id, get_class($user), $user->Vorname . ' ' . $user->Nachname, $user->{'E-Mail'}, 'nicht verfügbar'),
             default => null
         };
     }
