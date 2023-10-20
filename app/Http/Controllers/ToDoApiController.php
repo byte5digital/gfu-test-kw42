@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ToDoResource;
+use App\Models\TeamMember;
 use App\Models\ToDo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,11 +35,24 @@ class ToDoApiController extends Controller
             return new JsonResponse($validation->messages(), 422);
         }
 
-        $createdTodo = ToDo::create([
+        $shouldITakeUserOrTeamMember = rand(0, 1) == 1;
+
+        if ($shouldITakeUserOrTeamMember) {
+            $assignee = TeamMember::first();
+        } else {
+            $assignee = User::first();
+        }
+
+
+        $createdTodo = new ToDo([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id
         ]);
+
+        $createdTodo->assignable()->associate($assignee);
+
+        $createdTodo->save();
 
         return new ToDoResource($createdTodo);
     }

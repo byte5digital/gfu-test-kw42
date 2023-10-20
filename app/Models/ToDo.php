@@ -25,6 +25,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int|null $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|ToDo whereUserId($value)
  * @property-read \App\Models\User|null $user
+ * @property string $assignable_type
+ * @property int $assignable_id
+ * @property-read Model|\Eloquent $assignable
+ * @method static \Illuminate\Database\Eloquent\Builder|ToDo whereAssignableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ToDo whereAssignableType($value)
  * @mixin \Eloquent
  */
 class ToDo extends Model
@@ -36,5 +41,10 @@ class ToDo extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function assignable(): BelongsTo
+    {
+        return $this->morphTo();
     }
 }
