@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Data\EmployeeData;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,11 +21,7 @@ class ToDoResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'assignee' => match ($this->assignable_type) {
-                'App\Models\User' => new UserResource($this->assignable),
-                'App\Models\TeamMember' => new TeamMemberResource($this->assignable),
-                default => null
-            },
+            'assignee' => EmployeeData::fromModel($this->assignable)
         ];
     }
 }

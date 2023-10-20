@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 class TeamMember extends Model
 {
+
+    protected $connection = 'mysql_2';
     protected $guarded = [];
 
     use HasFactory;

@@ -17,31 +17,31 @@ class TeamMemberController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'unique:team_members,email'],
+            'email' => ['required', 'string', 'email'],
             'position' => ['required', 'string', 'max:100'],
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $teamMember = TeamMember::create($request->all());
 
         return new JsonResponse($teamMember, 200);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
